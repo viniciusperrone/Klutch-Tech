@@ -3,11 +3,30 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Flexo';
-  src: url('../assets/fonts/Flexo-CapsDEMO-webfont.woff') format('opentype');
-  font-style: normal;
-  font-weight: normal;
+  font-family: 'Flexo-Black';
+  src: url('../assets/fonts/Flexo-Black.otf') format('opentype');
 }
+
+@font-face {
+  font-family: 'Flexo-Bold';
+  src: url('../assets/fonts/Flexo-Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Flexo-BoldIt';
+  src: url('../assets/fonts/Flexo-BoldIt.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Flexo-MediumIt';
+  src: url('../assets/fonts/Flexo-MediumIt.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Flexo-Regular';
+  src: url('../assets/fonts/Flexo-Regular.otf') format('opentype');
+}
+
 body {
   @apply bg-white text-gray-900;
   --webkit-font-smoothing: antialiased;

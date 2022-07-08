@@ -15,13 +15,15 @@ export default function Home() {
             <Image src={PlusSvg} width={65} height={65} />
           </span>
           <Image src={FillingSvg} width={115} height={115} />
-          <strong className="text-[56px] text-blue-400 font-bold">
-            Simulacao
+          <strong className="text-[56px] text-blue-400 font-flexoBold leading-[56px]">
+            Simulação
             <br /> de Taxas
           </strong>
         </div>
         <div className="flex-1 flex flex-col items-center pt-[68px]">
-          <h2 className="text-[40px] text-blue-400">Valor desejado</h2>
+          <h2 className="text-[40px] text-blue-400 font-flexoBold">
+            Valor desejado
+          </h2>
           <div className="flex flex-row gap-[30px] py-7">
             <input
               type="number"

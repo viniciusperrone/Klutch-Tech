@@ -6,7 +6,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: 'Flexo, sans-serif'
+        flexoBlack: 'Flexo-Black, sans-serif',
+        flexoBold: 'Flexo-Bold, sans-serif',
+        flexoBoldIt: 'Flexo-BoldIt, sans-serif',
+        flexoMediumIt: 'Flexo-MediumIt, sans-serif',
+        flexoRegular: 'Flexo-Regular, sans-serif',
       },
       colors: {
         blue: {
