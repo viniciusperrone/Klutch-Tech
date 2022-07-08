@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Flexo';
+  src: url('../assets/fonts/Flexo-CapsDEMO-webfont.woff') format('opentype');
+  font-style: normal;
+  font-weight: normal;
+}
+body {
+  @apply bg-white text-gray-900;
+  --webkit-font-smoothing: antialiased;
+}
