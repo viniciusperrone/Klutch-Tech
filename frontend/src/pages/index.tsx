@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { Header } from '../components/Header';
 import FillingSvg from '../assets/icons/filling-orange.svg';
 import PlusSvg from '../assets/icons/plus.svg';
+import { Footer } from '../components/Footer';
+import { Button } from '../components/Buttton';
 
 export default function Home() {
   return (
@@ -30,12 +32,11 @@ export default function Home() {
               placeholder="R$ 0,00"
               className="bg-gray-200 w-[368px] h-[60px] px-2 text-center text-[24px] font-flexoRegular leading-10"
             />
-            <button className="bg-orange-400 w-[160px] rounded-[5px] py-2 text-[20px] font-flexoBold text-gray-200 leading-[24px] ">
-              Calcular
-            </button>
+            <Button title="Calcular" />
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
