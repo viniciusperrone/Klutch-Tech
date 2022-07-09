@@ -7,8 +7,14 @@ import ArrowUpSvg from '../assets/icons/arrow-up.svg';
 import ArrowDownSvg from '../assets/icons/arrow-down.svg';
 import CheckSvg from '../assets/icons/check.svg';
 import { Table } from '../components/Table';
+import { useRouter } from 'next/router';
 
 export default function ApplyForLoan() {
+  const router = useRouter();
+
+  function handleDone() {
+    router.push('request-feedback');
+  }
   return (
     <div>
       <Header />
@@ -101,10 +107,13 @@ export default function ApplyForLoan() {
               <button className="w-[200px] h-[60px] bg-blue-400 rounded-[5px] text-[24px] font-flexoBold text-white hover:opacity-80">
                 Automático
               </button>
-              <button className="w-[200px] h-[60px] rounded-[5px] text-[24px] font-flexoBold text-blue-400 hover:opacity-80">
+              <button className="w-[200px] h-[60px] rounded-[5px] hover:opacity-80">
                 Manual
               </button>
-              <button className="w-[580px] h-[60px] bg-blue-400 rounded-[5px] flex gap-5 justify-center items-center text-[24px] font-flexoBold text-white hover:opacity-80">
+              <button
+                className="w-[580px] h-[60px] bg-blue-400 rounded-[5px] flex gap-5 justify-center items-center text-[24px] font-flexoBold text-white hover:opacity-80"
+                onClick={handleDone}
+              >
                 {' '}
                 <Image src={CheckSvg} alt="check-card" width={26} height={26} />
                 Concluir
