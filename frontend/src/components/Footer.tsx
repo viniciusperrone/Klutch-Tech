@@ -1,6 +1,8 @@
+import Link from 'next/link';
 import { Button } from './Buttton';
 
 export function Footer() {
+  function handleAdvance() {}
   return (
     <footer className="w-full h-[86px] bg-blue-400 fixed bottom-0 flex flex-row justify-center items-center gap-[45px]">
       <p className="text-[24px] font-flexoBold text-white">
@@ -10,7 +12,9 @@ export function Footer() {
       <p className="text-[24px] font-flexoBold text-white">
         Valor da Parcela: R$1.115,00
       </p>
-      <Button title="Avançar" />
+      <Link href={'apply-for-loan'}>
+        <Button title="Avançar" onClick={handleAdvance} />
+      </Link>
     </footer>
   );
 }
