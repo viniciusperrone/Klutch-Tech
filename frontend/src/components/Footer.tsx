@@ -12,7 +12,7 @@ export function Footer() {
       <p className="text-[24px] font-flexoBold text-white">
         Valor da Parcela: R$1.115,00
       </p>
-      <Link href={'apply-for-loan'}>
+      <Link href={'find-customer'}>
         <Button title="Avançar" onClick={handleAdvance} />
       </Link>
     </footer>
