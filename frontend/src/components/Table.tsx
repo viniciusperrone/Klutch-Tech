@@ -1,7 +1,24 @@
+import { useState } from 'react';
+import className from 'classnames';
+
 export function Table() {
+  const [selectedTable, setSelectedTable] = useState<boolean>(false);
+
   return (
     <div className="mx-[16.5vw] flex flex-row">
-      <div className="w-[5%] min-h-full bg-white border-[1px] border-gray-300 rounded-l-[5px]" />
+      <div className="px-[10px] min-h-full bg-white border-[1px] rounded-l-[5px] border-gray-300 flex items-center">
+        <span
+          className="w-[25px] h-[25px] rounded-[25px] border-[1px] border-gray-900 cursor-pointer flex justify-center items-center"
+          onClick={() => setSelectedTable(!selectedTable)}
+        >
+          <div
+            className={className('w-[15px] h-[15px] rounded-[15px]', {
+              'bg-gray-900': selectedTable,
+              'border-[1px] border-gray-900': !selectedTable
+            })}
+          />
+        </span>
+      </div>
       <div className="flex-1 flex">
         <header className="bg-gray-200">
           <div className="py-[15px] flex justify-center items-center">
