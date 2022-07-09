@@ -6,12 +6,13 @@ import FillingSvg from '../assets/icons/filling-orange.svg';
 import PlusSvg from '../assets/icons/plus.svg';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/Buttton';
+import { Table } from '../components/Table';
 
 export default function Home() {
   return (
     <div className="flex-1">
       <Header />
-      <main className="flex-1 pt-[30px]">
+      <div className="flex-1 pt-[30px]">
         <div className="flex w-full pl-[18.2vw] items-center gap-10">
           <span>
             <Image src={PlusSvg} width={60} height={60} />
@@ -35,7 +36,14 @@ export default function Home() {
             <Button title="Calcular" />
           </div>
         </div>
+      </div>
+
+      <main className="flex-1 pt-8 pb-[200px]">
+        <Table />
+        <Table />
+        <Table />
       </main>
+
       <Footer />
     </div>
   );
