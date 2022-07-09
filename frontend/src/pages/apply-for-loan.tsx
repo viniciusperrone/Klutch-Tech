@@ -20,36 +20,7 @@ export default function ApplyForLoan() {
           </strong>
         </div>
 
-        <main className="flex-1 pt-8 flex flex-col gap-8 items-center">
-          <h2 className="text-2xl font-flexoRegular text-blue-400">
-            Busque o Cliente
-          </h2>
-
-          <div className="flex flex-row">
-            <input
-              className="h-10 bg-gray-200 rounded-l-[5px] pl-4"
-              type="text"
-            />
-            <button className="px-5 h-10 bg-blue-400 rounded-r-[5px] text-[14px] font-flexoBold text-white hover:opacity-80">
-              Buscar
-            </button>
-          </div>
-
-          <div className="px-10 pt-[22px] pb-8 flex flex-col gap-5 items-center bg-gray-200">
-            <h2 className="text-[20px] font-flexoRegular text-gray-900">
-              Cliente encontrado:
-            </h2>
-            <h2 className="text-[20px] font-flexoRegular text-orange-400">
-              072.119.055-93
-            </h2>
-            <h2 className="text-[22px] font-flexoBold text-blue-600">
-              Lara Test
-            </h2>
-            <button className="w-[200px] h-[60px] bg-blue-400 rounded-[5px] text-[24px] font-flexoBold text-white hover:opacity-80">
-              Solicitar
-            </button>
-          </div>
-        </main>
+        <main className="flex-1 pt-8 flex flex-col gap-8 items-center"></main>
       </div>
     </div>
   );

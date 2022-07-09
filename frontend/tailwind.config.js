@@ -9,6 +9,7 @@ module.exports = {
         flexoBlack: 'Flexo-Black, sans-serif',
         flexoBold: 'Flexo-Bold, sans-serif',
         flexoBoldIt: 'Flexo-BoldIt, sans-serif',
+        flexoMedium: 'Flexo-Medium, sans-serif',
         flexoMediumIt: 'Flexo-MediumIt, sans-serif',
         flexoRegular: 'Flexo-Regular, sans-serif',
       },

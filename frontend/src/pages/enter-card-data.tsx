@@ -4,8 +4,17 @@ import { Header } from '../components/Header';
 import FillingSvg from '../assets/icons/filling-orange.svg';
 import PlusSvg from '../assets/icons/plus.svg';
 import VisaLogo from '../assets/images/visa.png';
+import { FormEvent } from 'react';
+import { useRouter } from 'next/router';
 
 export default function EnterCardData() {
+  const router = useRouter();
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    router.push('/apply-for-loan');
+  }
   return (
     <div>
       <Header />
@@ -20,7 +29,10 @@ export default function EnterCardData() {
             <br /> Empréstimo
           </strong>
         </div>
-        <form className="flex-1 py-[50px] flex flex-col justify-center items-center">
+        <form
+          className="flex-1 py-[50px] flex flex-col justify-center items-center"
+          onSubmit={handleSubmit}
+        >
           <main className="py-[50px] flex flex-row gap-[60px]">
             <div className="flex flex-col items-center gap-7">
               <h1 className="text-[14px] font-flexoRegular text-blue-400">
@@ -37,7 +49,7 @@ export default function EnterCardData() {
                   type="text"
                   placeholder="000000000000"
                 />
-                <Image src={VisaLogo} alt="Card" width={40} height={40} />
+                <Image src={VisaLogo} alt="Card" width={45} height={45} />
               </div>
               <input
                 className="w-[300px] h-[45px] bg-gray-200 rounded-[5px] px-[20px] text-[14px] font-flexoBoldIt"

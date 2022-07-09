@@ -18,6 +18,11 @@
 }
 
 @font-face {
+  font-family: 'Flexo-Medium';
+  src: url('../assets/fonts/Flexo-Medium.otf') format('opentype');
+}
+
+@font-face {
   font-family: 'Flexo-MediumIt';
   src: url('../assets/fonts/Flexo-MediumIt.otf') format('opentype');
 }

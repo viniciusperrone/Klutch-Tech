@@ -46,7 +46,7 @@ export default function FindCustomer() {
             <h2 className="text-[22px] font-flexoBold text-blue-600">
               Lara Test
             </h2>
-            <Link href={'enter-card-data'}>
+            <Link href={'payment-method'}>
               <button className="w-[200px] h-[60px] bg-blue-400 rounded-[5px] text-[24px] font-flexoBold text-white hover:opacity-80">
                 Solicitar
               </button>
