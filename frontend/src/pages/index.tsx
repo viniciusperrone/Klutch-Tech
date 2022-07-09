@@ -39,9 +39,9 @@ export default function Home() {
       </div>
 
       <main className="flex-1 pt-8 pb-[200px]">
-        <Table />
-        <Table />
-        <Table />
+        <Table multiple />
+        <Table multiple />
+        <Table multiple />
       </main>
 
       <Footer />
