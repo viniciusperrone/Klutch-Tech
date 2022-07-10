@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Header } from '../components/Header';
 
@@ -8,6 +9,11 @@ import CheckSvg from '../assets/icons/check.svg';
 import CardSvg from '../assets/icons/card.svg';
 
 export default function RequestFeedback() {
+  const router = useRouter();
+
+  function handleRequestDetails() {
+    router.push('request-details');
+  }
   return (
     <div>
       <Header />
@@ -113,7 +119,10 @@ export default function RequestFeedback() {
               </div>
             </div>
           </div>
-          <button className="w-[400px] h-[70px] bg-blue-400 rounded-[5px] text-[24px] font-flexoBold text-white hover:opacity-80">
+          <button
+            className="w-[400px] h-[70px] bg-blue-400 rounded-[5px] text-[24px] font-flexoBold text-white hover:opacity-80"
+            onClick={handleRequestDetails}
+          >
             Detalhe de solicitação
           </button>
           <p className="text-[16px] font-flexoRegular text-blue-400">
