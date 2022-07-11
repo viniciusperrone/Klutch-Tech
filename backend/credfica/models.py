@@ -31,11 +31,12 @@ class Bank(models.Model):
   def __str__(self):
     return self.label
 
-class Client:
+class Customer(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid4)
   name = models.CharField(max_length=500)
   phone = models.IntegerField()
   cpf = models.IntegerField()
+  bank = models.ForeignKey("Bank", on_delete=models.CASCADE)
 
   def __str__(self):
     return self.name
