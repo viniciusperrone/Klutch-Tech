@@ -8,5 +8,5 @@ clientApi = ClientApi
 
 urlpatterns = [
     path('', rateTable.getAll),
-    path('search/', clientApi.getAll),
+    path('search/<int:cpf>', clientApi.getAll),
 ]

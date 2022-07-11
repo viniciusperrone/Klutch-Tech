@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
+from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.db import models
@@ -22,8 +23,8 @@ class TableApi(APIView):
 
 class ClientApi(APIView):
     @csrf_exempt
-    def getAll(request):
-        customers = Customer.objects.all()
-        customers_serializer = CustomerSerialize(
-            customers, many=True)
-        return JsonResponse(customers_serializer.data, safe=False)
+    def getAll(request, cpf):
+        customer = Customer.objects.get(cpf=cpf)
+        customer_serializer = CustomerSerialize(
+            customer)
+        return JsonResponse(customer_serializer.data, safe=False)

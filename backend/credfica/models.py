@@ -41,7 +41,7 @@ class Customer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=500)
     phone = models.IntegerField()
-    cpf = models.IntegerField()
+    cpf = models.IntegerField(unique=True)
 
     bank = models.ForeignKey(Bank, related_name="customers",
                              on_delete=models.CASCADE, blank=True, null=True)
