@@ -10,3 +10,14 @@ class RateTable(models.Model):
 
   def __str__(self):
     return self.name
+
+class Installments(models.Model):
+  installments = models.IntegerField()
+  installmentInterest = models.FloatField()
+  installmentValue = models.FloatField()
+  fullValue = models.FloatField()
+  comission = models.FloatField()
+  table = models.ForeignKey("RateTable", on_delete=models.CASCADE)
+
+  def __str__(self):
+    return self.installments
