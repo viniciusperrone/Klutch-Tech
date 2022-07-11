@@ -1,12 +1,13 @@
 
 from rest_framework import serializers
-from .models import Bank, Customer, Installments, RateTable
+from .models import Bank, Customer, Installments, RateTable, Solicitation
 
 
 class InstallmentsSerialize(serializers.ModelSerializer):
+
     class Meta:
         model = Installments
-        fields = ('__all__')
+        fields = '__all__'
 
 
 class RateTableSerialize(serializers.ModelSerializer):
@@ -15,7 +16,7 @@ class RateTableSerialize(serializers.ModelSerializer):
 
     class Meta:
         model = RateTable
-        fields = ('id', 'name', 'installments', 'created_at')
+        fields = '__all__'
 
 
 class BankSerialize(serializers.ModelSerializer):
@@ -31,4 +32,11 @@ class CustomerSerialize(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
+        fields = '__all__'
+
+
+class SolicitationSerialize(serializers.ModelSerializer):
+
+    class Meta:
+        model = Solicitation
         fields = '__all__'

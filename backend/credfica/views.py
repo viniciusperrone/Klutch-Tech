@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
@@ -5,8 +6,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.db import models
 
-from credfica.models import Customer, Installments, RateTable
-from credfica.serializers import CustomerSerialize, InstallmentsSerialize, RateTableSerialize
+from credfica.models import Customer, Installments, RateTable, Solicitation
+from credfica.serializers import CustomerSerialize, InstallmentsSerialize, RateTableSerialize, SolicitationSerialize
 # Create your views here.
 
 
@@ -25,6 +26,36 @@ class ClientApi(APIView):
     @csrf_exempt
     def getAll(request, cpf):
         customer = Customer.objects.get(cpf=cpf)
+        if customer is NULL:
+            return JsonResponse('Customer not exist!', safe=False).status_code(401)
         customer_serializer = CustomerSerialize(
             customer)
-        return JsonResponse(customer_serializer.data, safe=False)
+
+        print(customer_serializer)
+        return JsonResponse(customer_serializer.data, safe=False).status_code(200)
+
+
+class SolicitationApi(APIView):
+    @csrf_exempt
+    def sendRequest(request):
+        sendRequestData = JSONParser().parse(request)
+        customer = Customer.objects.get(id=sendRequestData['clientId'])
+        if customer is NULL:
+            return JsonResponse('Customer not exist!', safe=False).status_code(401)
+
+        installment = Installments.objects.get(
+            id=sendRequestData['installmentId'])
+        if installment is NULL:
+            return JsonResponse('Installment not exist!', safe=False).status_code(401)
+
+        table = RateTable.objects.get(id=sendRequestData['rateTableId'])
+        if table is NULL:
+            return JsonResponse('Table not exist!', safe=False).status_code(401)
+
+        solicitation_serializer = SolicitationSerialize(data=sendRequestData)
+
+        print(solicitation_serializer)
+        if solicitation_serializer.is_valid():
+            solicitation_serializer.save()
+            return JsonResponse(solicitation_serializer.data, safe=False)
+        return JsonResponse('Failed to make request', safe=False)

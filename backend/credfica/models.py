@@ -53,17 +53,16 @@ class Customer(models.Model):
 class Solicitation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4)
     clientId = models.UUIDField()
-    installmentInterest = models.FloatField()
-    installmentInterestValue = models.FloatField()
-    cardNumber = models.IntegerField()
-    desiredValue = models.IntegerField()
-    totalLoan = models.FloatField()
     installmentId = models.IntegerField()
     rateTableId = models.UUIDField()
+    installmentInterest = models.FloatField()
+    installmentInterestValue = models.FloatField()
+    cardName = models.CharField(max_length=255)
+    cardNumber = models.IntegerField()
+    expirationDate = models.CharField(max_length=10)
+    cvc = models.IntegerField()
+    desiredValue = models.IntegerField()
+    totalLoan = models.FloatField()
 
-    customer = models.ForeignKey(
-        Customer, related_name="solicitations", on_delete=models.CASCADE, blank=True, null=True)
-    installments = models.ForeignKey(
-        Installments, related_name="solicitations", on_delete=models.CASCADE, blank=True, null=True)
-    table = models.ForeignKey(RateTable, related_name="solicitations",
-                              on_delete=models.CASCADE, blank=True, null=True)
+    def __str__(self):
+        return self.cardName
