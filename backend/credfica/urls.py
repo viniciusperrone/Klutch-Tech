@@ -1,11 +1,12 @@
 from django.urls import path
 from django.urls.resolvers import URLPattern
 
-from credfica.views import TableApi
+from credfica.views import ClientApi, TableApi
 
 rateTable = TableApi
+clientApi = ClientApi
 
 urlpatterns = [
-    path('table/', rateTable.getAll),
-    path('table/<str:id>', rateTable.findInstallments)
+    path('', rateTable.getAll),
+    path('search/', clientApi.getAll),
 ]
