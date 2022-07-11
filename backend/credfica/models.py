@@ -21,3 +21,21 @@ class Installments(models.Model):
 
   def __str__(self):
     return self.installments
+
+class Bank(models.Model):
+  id = models.UUIDField(primary_key=True, default=uuid4)
+  label = models.CharField(max_length=500)
+  accountTypeLabel = models.CharField(max_length=255)
+  accountNumber = models.IntegerField()
+
+  def __str__(self):
+    return self.label
+
+class Client:
+  id = models.UUIDField(primary_key=True, default=uuid4)
+  name = models.CharField(max_length=500)
+  phone = models.IntegerField()
+  cpf = models.IntegerField()
+
+  def __str__(self):
+    return self.name
