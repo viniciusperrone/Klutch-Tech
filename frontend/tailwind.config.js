@@ -26,6 +26,7 @@ module.exports = {
         },
         green: {
           100: '#E8FFE3',
+          300: '#91E28D',
           700: '#31AC2B'
         },
         gray: {
@@ -33,7 +34,21 @@ module.exports = {
           300: '#E6E6E6',
           900: '#777777'
         },
+        red: {
+          200: '#FF7070'
+        }
 
+      },
+      keyframes: {
+        apperFromLeft: {
+          'from': { transform: 'translateX(0)' },
+          'to': { transform: 'translateX(-50%)' }
+        },
+        appearFromBottom: {
+          'from': { transform: 'translateY(100px)' },
+          'to': { transform: 'translateY(0)' }
+        },
+        actionAppear: 'apperFromLeft 0.1s appearFromBottom 0.5s'
       }
     },
   },

@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import { Header } from '../components/Header';
-
-import FillingSvg from '../assets/icons/filling-orange.svg';
-import PlusSvg from '../assets/icons/plus.svg';
 import Link from 'next/link';
+
+import { Header } from '@components/Header';
+import FillingSvg from 'assets/icons/filling-orange.svg';
+import PlusSvg from 'assets/icons/plus.svg';
 
 export default function PaymentMethod() {
   return (

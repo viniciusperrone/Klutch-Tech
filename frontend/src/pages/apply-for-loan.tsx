@@ -1,16 +1,26 @@
 import Image from 'next/image';
-import { Header } from '../components/Header';
-
-import FillingSvg from '../assets/icons/filling-orange.svg';
-import PlusSvg from '../assets/icons/plus.svg';
-import ArrowUpSvg from '../assets/icons/arrow-up.svg';
-import ArrowDownSvg from '../assets/icons/arrow-down.svg';
-import CheckSvg from '../assets/icons/check.svg';
-import { Table } from '../components/Table';
 import { useRouter } from 'next/router';
+
+import { useRequest } from '@hooks/useRequest';
+import { Table } from '@components/Table';
+import { Header } from '@components/Header';
+
+import FillingSvg from 'assets/icons/filling-orange.svg';
+import PlusSvg from 'assets/icons/plus.svg';
+import ArrowUpSvg from 'assets/icons/arrow-up.svg';
+import ArrowDownSvg from 'assets/icons/arrow-down.svg';
+import CheckSvg from 'assets/icons/check.svg';
+import { useValue } from '@hooks/useValue';
+import { currencyBRL } from 'utils/currencyBRL';
 
 export default function ApplyForLoan() {
   const router = useRouter();
+  const { request } = useRequest();
+  const { value } = useValue();
+
+  const newInstallment = request.table.installments.filter(
+    installment => installment.installment <= request.installments.installment
+  );
 
   function handleDone() {
     router.push('request-feedback');
@@ -34,7 +44,7 @@ export default function ApplyForLoan() {
             </h3>
             <div className="w-[230px] h-[65%] bg-white rounded-[5px] flex px-[10px] justify-between items-center">
               <strong className="text-[22px] font-flexoBoldIt text-orange-400">
-                Tabela Padrão
+                {request.table.name}
               </strong>
               <div className="flex flex-col gap-1">
                 <span className="h-[15px] cursor-pointer hover:opacity-60">
@@ -56,7 +66,7 @@ export default function ApplyForLoan() {
               </h3>
               <div className="w-[230px] h-[65%] bg-white rounded-[5px] flex px-[10px] justify-between items-center">
                 <strong className="text-[22px] font-flexoBoldIt text-orange-400">
-                  R$ 1.000,00
+                  {currencyBRL(request.desiredValue)}
                 </strong>
               </div>
             </div>
@@ -66,7 +76,7 @@ export default function ApplyForLoan() {
               </h3>
               <div className="w-[230px] h-[65%] bg-white rounded-[5px] flex px-[10px] justify-between items-center">
                 <strong className="text-[22px] font-flexoBoldIt text-orange-400">
-                  R$ 1.000,00
+                  {currencyBRL(request.installments.installmentValue * value)}
                 </strong>
               </div>
             </div>
@@ -76,7 +86,7 @@ export default function ApplyForLoan() {
               </h3>
               <div className="w-[230px] h-[65%] bg-white rounded-[5px] flex px-[10px] justify-between items-center">
                 <strong className="text-[22px] font-flexoBoldIt text-orange-400">
-                  3
+                  {request.installments.installment}
                 </strong>
                 <div className="flex flex-col gap-1">
                   <span className="h-[15px] cursor-pointer hover:opacity-60">
@@ -94,7 +104,10 @@ export default function ApplyForLoan() {
               </h3>
               <div className="w-[230px] h-[65%] bg-white rounded-[5px] flex px-[10px] justify-between items-center">
                 <strong className="text-[22px] font-flexoBoldIt text-orange-400">
-                  R$ 1.000,00
+                  {currencyBRL(
+                    (request.installments.installmentValue * value) /
+                      request.installments.installment
+                  )}
                 </strong>
               </div>
             </div>
@@ -107,7 +120,7 @@ export default function ApplyForLoan() {
               <button className="w-[200px] h-[60px] bg-blue-400 rounded-[5px] text-[24px] font-flexoBold text-white hover:opacity-80">
                 Automático
               </button>
-              <button className="w-[200px] h-[60px] rounded-[5px] hover:opacity-80">
+              <button className="w-[200px] h-[60px] rounded-[5px] text-[24px] font-flexoBold text-blue-400 hover:opacity-80">
                 Manual
               </button>
               <button
@@ -120,7 +133,12 @@ export default function ApplyForLoan() {
               </button>
             </div>
           </div>
-          <Table />
+          <Table
+            id={request.table.id}
+            name={request.table.name}
+            installments={newInstallment}
+            value={value}
+          />
         </main>
       </div>
     </div>

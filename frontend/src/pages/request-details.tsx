@@ -1,14 +1,21 @@
 import Image from 'next/image';
-import { Header } from '../components/Header';
 
-import FillingSvg from '../assets/icons/filling-orange.svg';
-import PlusSvg from '../assets/icons/plus.svg';
-import CardSvg from '../assets/icons/card.svg';
-import AlertSvg from '../assets/icons/alert.svg';
-import CheckCircleSvg from '../assets/icons/checkmark-circle.svg';
-import DocumentSvg from '../assets/icons/document.svg';
+import { useValue } from '@hooks/useValue';
+import { useRequest } from '@hooks/useRequest';
+import { Header } from '@components/Header';
+import { currencyBRL } from 'utils/currencyBRL';
+
+import FillingSvg from 'assets/icons/filling-orange.svg';
+import PlusSvg from 'assets/icons/plus.svg';
+import CardSvg from 'assets/icons/card.svg';
+import AlertSvg from 'assets/icons/alert.svg';
+import CheckCircleSvg from 'assets/icons/checkmark-circle.svg';
+import DocumentSvg from 'assets/icons/document.svg';
+import { dateFormatted } from 'utils/dateFormatted';
 
 export default function RequestDetails() {
+  const { value } = useValue();
+  const { request } = useRequest();
   return (
     <div>
       <Header />
@@ -39,7 +46,7 @@ export default function RequestDetails() {
               <div className="w-[180px] h-[250px] bg-gray-200 rounded flex flex-col py-6 items-center gap-[52px]">
                 <h1 className="text-[20px] font-flexoMedium">Valor Total</h1>
                 <strong className="text-[22px] font-flexoBold text-green-700">
-                  R$ 6.000,00
+                  {currencyBRL(request.installments.installmentValue * value)}
                 </strong>
               </div>
               <div className="w-[180px] h-[250px] bg-gray-200 rounded flex flex-col py-6 items-center gap-[52px]">
@@ -47,7 +54,10 @@ export default function RequestDetails() {
                   Valor a depositar
                 </h1>
                 <strong className="text-[22px] font-flexoBold text-green-700">
-                  R$ 6.000,00
+                  {currencyBRL(
+                    (request.installments.installmentValue * value) /
+                      request.installments.installment
+                  )}
                 </strong>
               </div>
               <div className="w-[180px] h-[250px] bg-gray-200 rounded flex flex-col py-4 justify-between items-center">
@@ -84,7 +94,7 @@ export default function RequestDetails() {
                 </h1>
                 <Image
                   src={DocumentSvg}
-                  alt="docuemnt"
+                  alt="document"
                   width={100}
                   height={70}
                 />
@@ -116,22 +126,27 @@ export default function RequestDetails() {
                   <Image src={CardSvg} alt="card" width={40} height={25} />
                 </div>
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  Número do cartão: 5252 0565 6526 6552
+                  Número do cartão: {request.cardNumber}
                 </h1>
                 <div className="flex flex-row justify-center items-center gap-[30px]">
                   <h1 className="text-[16px] font-flexoBoldIt">
-                    Validade: 03/27
+                    Validade: {request.expirationDate.slice(3)}
                   </h1>
-                  <h1 className="text-[16px] font-flexoBoldIt">CVC: 254</h1>
+                  <h1 className="text-[16px] font-flexoBoldIt">
+                    CVC: {request.cvc}
+                  </h1>
                 </div>
                 <h1 className="text-[16px] font-flexoBoldIt">
                   1 parcelas de:{' '}
                   <strong className="text-[16px] font-flexoBoldIt text-green-700">
-                    R$ 2000,00
+                    {currencyBRL(
+                      (request.installments.installmentValue * value) /
+                        request.installments.installment
+                    )}
                   </strong>
                 </h1>
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  Tabela: Tabela padrão
+                  Tabela: {request.table.name}
                 </h1>
               </main>
             </div>
@@ -142,20 +157,20 @@ export default function RequestDetails() {
               </header>
               <main className="flex-1 flex flex-col px-[20px] gap-4">
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  Nome: Lara B Esquivel
+                  Nome: {request.customer.name}
                 </h1>
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  CPF: 866.666.965.87
+                  CPF: {request.customer.cpf}
                 </h1>
                 <h1 className="text-[16px] font-flexoBoldIt">Agência: 1235</h1>
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  Banco: 029 - Banco Itaú Consignado S.A.
+                  Banco: {request.customer.bank.label}
                 </h1>
                 <h1 className="text-[16px] font-flexoBoldIt">
                   Tipo de Conta: Poupança
                 </h1>
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  Número da conta: 222245
+                  Número da conta: {request.cardNumber}
                 </h1>
               </main>
             </div>
@@ -167,7 +182,7 @@ export default function RequestDetails() {
               <main className="flex-1 flex flex-col px-[20px] gap-4">
                 <div className="max-w-full flex justify-center items-center">
                   <h1 className="text-[18px] font-flexoBoldIt">
-                    Data: 09/02/2020
+                    Data: {dateFormatted()}
                   </h1>
                 </div>
                 <div className="flex flex-row flex-wrap justify-center gap-6">

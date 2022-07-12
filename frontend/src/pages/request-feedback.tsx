@@ -7,9 +7,14 @@ import FillingSvg from '../assets/icons/filling-orange.svg';
 import PlusSvg from '../assets/icons/plus.svg';
 import CheckSvg from '../assets/icons/check.svg';
 import CardSvg from '../assets/icons/card.svg';
+import { useRequest } from '@hooks/useRequest';
+import { useValue } from '@hooks/useValue';
+import { currencyBRL } from 'utils/currencyBRL';
 
 export default function RequestFeedback() {
   const router = useRouter();
+  const { request } = useRequest();
+  const { value } = useValue();
 
   function handleRequestDetails() {
     router.push('request-details');
@@ -39,11 +44,11 @@ export default function RequestFeedback() {
           <div className="flex flex-row flex-wrap justify-center gap-[20px]">
             <div className="w-[560px] h-[60px] bg-green-100 rounded-[5px] flex flex-row px-[38px] justify-between items-center">
               <h3 className="text-[16px] font-flexoBoldIt text-gray-900">
-                João Paulo Guedes
+                {request.customer.name}
               </h3>
               <div className="flex flex-row items-center gap-[30px]">
                 <p className="text-[16px] font-flexoBoldIt text-gray-900">
-                  71 9988-7766
+                  {request.customer.phone}
                 </p>
                 <GoCheck size={32} color="#228A95" />
               </div>
@@ -54,7 +59,7 @@ export default function RequestFeedback() {
               </h3>
               <div className="flex flex-row items-center gap-[10px]">
                 <p className="text-[18px] font-flexoBlack text-orange-400">
-                  12%
+                  {request.installments.installmentInterest}%
                 </p>
                 <GoCheck size={32} color="#156b74" />
               </div>
@@ -63,11 +68,11 @@ export default function RequestFeedback() {
               <div className="flex flex-row items-center gap-[60px]">
                 <Image src={CardSvg} width={45} height={40} />
                 <h3 className="ml-[-20px] text-[16px] font-flexoBoldIt text-gray-900">
-                  4327
+                  {request.cvc}
                 </h3>
                 <h3 className="text-[16px] font-flexoBold text-black">VISA</h3>
                 <h3 className="text-[16px] font-flexoBoldIt text-gray-900">
-                  02/24
+                  {request.cardNumber}
                 </h3>
               </div>
               <div className="flex flex-row items-center gap-[30px]">
@@ -80,7 +85,7 @@ export default function RequestFeedback() {
               </h3>
               <div className="flex flex-row items-center gap-[10px]">
                 <p className="text-[24px] font-flexoBoldIt text-orange-400">
-                  12
+                  {request.installments.installment}
                 </p>
                 <GoCheck size={32} color="#228A95" />
               </div>
@@ -91,7 +96,7 @@ export default function RequestFeedback() {
               </h3>
               <div className="flex flex-row items-center gap-[10px]">
                 <p className="text-[22px] font-flexoBoldIt text-green-700">
-                  R$ 7.200,00
+                  R$ {value}
                 </p>
                 <GoCheck size={32} color="#228A95" />
               </div>
@@ -102,7 +107,11 @@ export default function RequestFeedback() {
               </h3>
               <div className="flex flex-row items-center gap-[10px]">
                 <p className="text-[22px] font-flexoBoldIt text-green-700">
-                  R$ 433,33
+                  R${' '}
+                  {currencyBRL(
+                    (request.installments.installmentValue * value) /
+                      request.installments.installment
+                  )}
                 </p>
                 <GoCheck size={32} color="#228A95" />
               </div>
@@ -113,7 +122,7 @@ export default function RequestFeedback() {
               </h3>
               <div className="flex flex-row items-center gap-[10px]">
                 <p className="text-[22px] font-flexoBoldIt text-green-700">
-                  R$ 7.200,00
+                  {currencyBRL(request.installments.installmentValue * value)}
                 </p>
                 <GoCheck size={32} color="#228A95" />
               </div>
