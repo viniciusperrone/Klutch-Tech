@@ -37,6 +37,10 @@ class CustomerSerialize(serializers.ModelSerializer):
 
 class SolicitationSerialize(serializers.ModelSerializer):
 
+    customer = CustomerSerialize(read_only=True)
+    installments = InstallmentsSerialize(read_only=True)
+    table = RateTableSerialize(read_only=True)
+
     class Meta:
         model = Solicitation
         fields = '__all__'

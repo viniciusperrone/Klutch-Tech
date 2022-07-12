@@ -23,8 +23,8 @@ class Installments(models.Model):
     table = models.ForeignKey(RateTable, related_name="installments",
                               on_delete=models.CASCADE, blank=True, null=True)
 
-    def __int__(self):
-        return self.installments
+    def __str__(self):
+        return f'{self.table} - {self.installment}'
 
 
 class Bank(models.Model):
@@ -41,7 +41,7 @@ class Customer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=500)
     phone = models.IntegerField()
-    cpf = models.IntegerField(unique=True)
+    cpf = models.CharField(unique=True, max_length=14)
 
     bank = models.ForeignKey(Bank, related_name="customers",
                              on_delete=models.CASCADE, blank=True, null=True)
@@ -58,11 +58,18 @@ class Solicitation(models.Model):
     installmentInterest = models.FloatField()
     installmentInterestValue = models.FloatField()
     cardName = models.CharField(max_length=255)
-    cardNumber = models.IntegerField()
+    cardNumber = models.CharField(max_length=255)
     expirationDate = models.CharField(max_length=10)
-    cvc = models.IntegerField()
+    cvc = models.CharField(max_length=4)
     desiredValue = models.IntegerField()
     totalLoan = models.FloatField()
+
+    customer = models.ForeignKey(
+        Customer, related_name="solicitations", on_delete=models.CASCADE, blank=True, null=True)
+    installments = models.ForeignKey(
+        Installments, related_name="solicitations", on_delete=models.CASCADE, blank=True, null=True)
+    table = models.ForeignKey(RateTable, related_name="solicitations",
+                              on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.cardName

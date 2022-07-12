@@ -24,15 +24,14 @@ class TableApi(APIView):
 
 class ClientApi(APIView):
     @csrf_exempt
-    def getAll(request, cpf):
-        customer = Customer.objects.get(cpf=cpf)
+    def getAll(request):
+        customerData = JSONParser().parse(request)
+        customer = Customer.objects.get(cpf=customerData['cpf'])
         if customer is NULL:
-            return JsonResponse('Customer not exist!', safe=False).status_code(401)
-        customer_serializer = CustomerSerialize(
-            customer)
+            return JsonResponse('Customer not exist!', safe=False, status=401)
+        customer_serializer = CustomerSerialize(customer)
 
-        print(customer_serializer)
-        return JsonResponse(customer_serializer.data, safe=False).status_code(200)
+        return JsonResponse(customer_serializer.data, safe=False, status=200)
 
 
 class SolicitationApi(APIView):
@@ -41,21 +40,22 @@ class SolicitationApi(APIView):
         sendRequestData = JSONParser().parse(request)
         customer = Customer.objects.get(id=sendRequestData['clientId'])
         if customer is NULL:
-            return JsonResponse('Customer not exist!', safe=False).status_code(401)
+            return JsonResponse('Customer not exist!', safe=False, status=401)
 
         installment = Installments.objects.get(
             id=sendRequestData['installmentId'])
         if installment is NULL:
-            return JsonResponse('Installment not exist!', safe=False).status_code(401)
+            return JsonResponse('Installment not exist!', safe=False, status=401)
 
         table = RateTable.objects.get(id=sendRequestData['rateTableId'])
         if table is NULL:
-            return JsonResponse('Table not exist!', safe=False).status_code(401)
+            return JsonResponse('Table not exist!', safe=False, status=401)
 
         solicitation_serializer = SolicitationSerialize(data=sendRequestData)
 
         print(solicitation_serializer)
         if solicitation_serializer.is_valid():
-            solicitation_serializer.save()
-            return JsonResponse(solicitation_serializer.data, safe=False)
-        return JsonResponse('Failed to make request', safe=False)
+            solicitation_serializer.save(
+                customer=customer, installments=installment, table=table)
+            return JsonResponse(solicitation_serializer.data, safe=False, status=200)
+        return JsonResponse('Failed to make request', safe=False, status=500)

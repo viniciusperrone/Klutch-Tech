@@ -9,6 +9,6 @@ solicitation = SolicitationApi
 
 urlpatterns = [
     path('', rateTable.getAll),
-    path('search/<int:cpf>', clientApi.getAll),
+    path('search', clientApi.getAll),
     path('send-request', solicitation.sendRequest),
 ]
