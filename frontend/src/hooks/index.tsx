@@ -3,7 +3,8 @@ import { ReactNode } from 'react';
 import {
   ICustomer,
   IInstallmentsHook,
-  ISolicitationResponse
+  ISolicitationResponse,
+  IStorage
 } from '@shared/interfaces';
 
 type Props = {
@@ -18,6 +19,7 @@ export default function ContextProvider({ children }: Props) {
   const [customer, setCustomer] = useState<ICustomer | null>();
   const [request, setRequest] = useState<ISolicitationResponse | null>();
   const [value, setValue] = useState<number>();
+  const [storage, setStorage] = useState<IStorage>({} as IStorage);
   return (
     <Context.Provider
       value={{
@@ -28,7 +30,9 @@ export default function ContextProvider({ children }: Props) {
         value,
         setValue,
         request,
-        setRequest
+        setRequest,
+        storage,
+        setStorage
       }}
     >
       {children}

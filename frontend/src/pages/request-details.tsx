@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { useValue } from '@hooks/useValue';
+import { useStorage } from '@hooks/useStorage';
 import { useRequest } from '@hooks/useRequest';
 import { Header } from '@components/Header';
 import { currencyBRL } from 'utils/currencyBRL';
@@ -16,6 +17,8 @@ import { dateFormatted } from 'utils/dateFormatted';
 export default function RequestDetails() {
   const { value } = useValue();
   const { request } = useRequest();
+  const { storage } = useStorage();
+
   return (
     <div>
       <Header />
@@ -70,9 +73,14 @@ export default function RequestDetails() {
                   width={100}
                   height={70}
                 />
-                <p className="text-[14px] font-flexRegular text-blue-500 underline">
+                <a
+                  className="text-[14px] font-flexRegular text-blue-500 underline"
+                  href={storage.front}
+                  download
+                  target="_blank"
+                >
                   Ver comprovante
-                </p>
+                </a>
               </div>
               <div className="w-[180px] h-[250px] bg-gray-200 rounded flex flex-col py-4 justify-between items-center">
                 <h1 className="text-[18px] font-flexoMedium">
@@ -84,9 +92,14 @@ export default function RequestDetails() {
                   width={100}
                   height={70}
                 />
-                <p className="text-[14px] font-flexRegular text-blue-500 underline">
+                <a
+                  className="text-[14px] font-flexRegular text-blue-500 underline"
+                  href={storage.towards}
+                  download
+                  target="_blank"
+                >
                   Ver comprovante
-                </p>
+                </a>
               </div>
               <div className="w-[180px] h-[250px] bg-gray-200 rounded flex flex-col py-4 justify-between items-center">
                 <h1 className="text-[18px] font-flexoMedium">
@@ -98,9 +111,14 @@ export default function RequestDetails() {
                   width={100}
                   height={70}
                 />
-                <p className="text-[14px] font-flexRegular text-blue-500 underline">
+                <a
+                  className="text-[14px] font-flexRegular text-blue-500 underline"
+                  href={storage.selfie}
+                  download
+                  target="_blank"
+                >
                   Ver comprovante
-                </p>
+                </a>
               </div>
             </div>
           </div>
@@ -137,7 +155,7 @@ export default function RequestDetails() {
                   </h1>
                 </div>
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  1 parcelas de:{' '}
+                  {request.installments.installment} parcelas de:{' '}
                   <strong className="text-[16px] font-flexoBoldIt text-green-700">
                     {currencyBRL(
                       (request.installments.installmentValue * value) /

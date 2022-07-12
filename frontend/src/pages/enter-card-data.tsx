@@ -1,4 +1,5 @@
-import { FormEvent, useState } from 'react';
+import { useState, useRef, FormEvent } from 'react';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FadeLoader } from 'react-spinners';
@@ -17,6 +18,8 @@ import FillingSvg from 'assets/icons/filling-orange.svg';
 import PlusSvg from 'assets/icons/plus.svg';
 import VisaLogo from 'assets/images/visa.png';
 import { Error } from '@components/Error';
+import { useStorage } from '@hooks/useStorage';
+import { storage } from 'src/lib/firebase';
 
 export default function EnterCardData() {
   const router = useRouter();
@@ -24,10 +27,15 @@ export default function EnterCardData() {
   const { installmentClient } = useInstallments();
   const { value: price } = useValue();
   const { setRequest } = useRequest();
+  const { storage: storageRequest, setStorage } = useStorage();
 
   const [sendRequestData, setSendRequestData] = useState({} as ISolicitation);
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<string>();
+  const [progress, setProgress] = useState<number>(0);
+  const [imgURL, setImgURL] = useState<any>();
+
+  const inputRef = useRef(null);
 
   const {
     data,
@@ -39,6 +47,47 @@ export default function EnterCardData() {
   function onChange(value: string | number, name: string) {
     setSendRequestData({ ...sendRequestData, [name]: value });
   }
+
+  function handleAddImage(event: any, name: string) {
+    const file = event;
+
+    inputRef.current.value = null;
+
+    console.log(file);
+
+    if (!file) {
+      setError(true);
+      setMessage('Error ao enviar imagem!');
+      setTimeout(() => {
+        setError(false);
+      }, 2600);
+      return;
+    }
+
+    const storageRef = ref(storage, `images/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      snapshort => {
+        const progress =
+          (snapshort.bytesTransferred / snapshort.totalBytes) * 100;
+        setProgress(progress);
+      },
+      error => {
+        setError(true);
+        setMessage('Falha no envio da imagem!');
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(url => {
+          setStorage({ ...storageRequest, [name]: url });
+          console.log(url);
+          setImgURL(url);
+        });
+      }
+    );
+  }
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
@@ -98,6 +147,7 @@ export default function EnterCardData() {
     setMessage('Erro de conexão!');
   }
 
+  console.log(storageRequest);
   return (
     <div>
       <Header />
@@ -160,38 +210,64 @@ export default function EnterCardData() {
               <h1 className="text-[14px] font-flexoRegular text-blue-400">
                 Faça o upload dos anexos do cartão:
               </h1>
-              <div className="w-[300px] h-[45px] bg-gray-200 rounded-[5px] flex px-[20px] flex-row justify-between items-center">
+              <span className="w-[300px] h-[45px] bg-gray-200 rounded-[5px] flex px-[20px] flex-row justify-between items-center overflow-hidden">
                 <h3 className="text-[14px] font-flexoBoldIt">
                   Cartão de Crédito (Frente)
                 </h3>
-                <span className="cursor-pointer">
-                  <p className="text-[12px] font-flexRegular underline">
-                    Adicionar
-                  </p>
-                </span>
-              </div>
-              <div className="w-[300px] h-[45px] bg-gray-200 rounded-[5px] flex px-[20px] flex-row justify-between items-center">
+                <label className="w-[40px] text-[12px] font-flexRegular underline cursor-pointer mr-4 flex flex-row">
+                  {storageRequest.front ? 'Adicionado' : 'Adicionar'}
+                  <input
+                    className="file:hidden"
+                    type="file"
+                    title=" "
+                    name="fupload"
+                    accept=".png, .jpg, .jpeg"
+                    ref={inputRef}
+                    onChange={e => handleAddImage(e.target?.files[0], 'front')}
+                  />
+                </label>
+              </span>
+              <span className="w-[300px] h-[45px] bg-gray-200 rounded-[5px] flex px-[20px] flex-row justify-between items-center overflow-hidden">
                 <h3 className="text-[14px] font-flexoBoldIt">
-                  Cartão de Crédito (Frente)
+                  Cartão de Crédito (Verso)
                 </h3>
-                <span className="cursor-pointer">
-                  <p className="text-[12px] font-flexRegular underline">
-                    Adicionar
-                  </p>
-                </span>
-              </div>
-              <div className="w-[300px] h-[45px] bg-gray-200 rounded-[5px] flex px-[20px] flex-row justify-between items-center">
-                <h3 className="text-[14px] font-flexoBoldIt">
-                  Cartão de Crédito (Frente)
-                </h3>
+                <label className="w-[40px] text-[12px] font-flexRegular underline cursor-pointer mr-4 flex flex-row">
+                  {storageRequest.towards ? 'Adicionado' : 'Adicionar'}
+                  <input
+                    className="file:hidden"
+                    type="file"
+                    title=" "
+                    name="fupload"
+                    accept=".png, .jpg, .jpeg"
+                    ref={inputRef}
+                    onChange={e =>
+                      handleAddImage(e.target?.files[0], 'towards')
+                    }
+                  />
+                </label>
+              </span>
 
-                <span className="cursor-pointer">
-                  <p className="text-[12px] font-flexRegular underline">
-                    Adicionar
-                  </p>
-                </span>
-              </div>
-              <strong className="text-[12px] font-flexoRegular text-blue-400">
+              <span className="w-[300px] h-[45px] bg-gray-200 rounded-[5px] flex px-[20px] flex-row justify-between items-center overflow-hidden">
+                <h3 className="text-[14px] font-flexoBoldIt">
+                  Selfie com cartão de crédito
+                </h3>
+                <label className="w-[40px] text-[12px] font-flexRegular underline cursor-pointer mr-4 flex flex-rol">
+                  {storageRequest.selfie ? 'Adicionado' : 'Adicionar'}
+                  <input
+                    className="file:hidden"
+                    type="file"
+                    name="fupload"
+                    accept=".png, .jpg, .jpeg"
+                    ref={inputRef}
+                    onChange={e => handleAddImage(e.target?.files[0], 'selfie')}
+                  />
+                </label>
+              </span>
+
+              <strong
+                className="text-[12px] font-flex
+               oRegular text-blue-400"
+              >
                 Atenção: As fotos devem estar legíveis, com todas as <br />
                 informações visíveis do cartão.
               </strong>

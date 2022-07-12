@@ -32,6 +32,9 @@
   src: url('../assets/fonts/Flexo-Regular.otf') format('opentype');
 }
 
+@viewchild ('fileInput')
+  myVar1: any;
+
 body {
   @apply bg-white text-gray-900;
   --webkit-font-smoothing: antialiased;

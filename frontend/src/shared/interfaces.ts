@@ -59,3 +59,9 @@ export interface ISolicitationResponse extends ISolicitation {
   installments: IInstallments;
   table: IRateTable | null;
 }
+
+export interface IStorage {
+  selfie: string;
+  front: string;
+  towards: string;
+}

@@ -96,7 +96,7 @@ export default function RequestFeedback() {
               </h3>
               <div className="flex flex-row items-center gap-[10px]">
                 <p className="text-[22px] font-flexoBoldIt text-green-700">
-                  R$ {value}
+                  {currencyBRL(value)}
                 </p>
                 <GoCheck size={32} color="#228A95" />
               </div>
@@ -107,7 +107,6 @@ export default function RequestFeedback() {
               </h3>
               <div className="flex flex-row items-center gap-[10px]">
                 <p className="text-[22px] font-flexoBoldIt text-green-700">
-                  R${' '}
                   {currencyBRL(
                     (request.installments.installmentValue * value) /
                       request.installments.installment
