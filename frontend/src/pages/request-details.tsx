@@ -16,14 +16,19 @@ import DocumentSvg from "assets/icons/document.svg";
 import { dateFormatted } from "utils/dateFormatted";
 
 export default function RequestDetails() {
-  const router = useRouter();
   const { value } = useValue();
   const { request } = useRequest();
   const { storage } = useStorage();
 
   if (!request || !value) {
-    router.back();
-    return;
+    return (
+      <div className="w-[100vw] h-[100vh] flex flex-col gap-[200px]">
+        <Header />
+        <div className="flex justify-center items-center">
+          <h1 className="text-[28px] font-flexoMedium">Sem acesso</h1>
+        </div>
+      </div>
+    );
   }
 
   return (

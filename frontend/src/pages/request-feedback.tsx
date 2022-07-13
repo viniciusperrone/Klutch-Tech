@@ -16,13 +16,19 @@ export default function RequestFeedback() {
   const { request } = useRequest();
   const { value } = useValue();
 
-  if (!request || !value) {
-    router.back();
-    return;
-  }
-
   function handleRequestDetails() {
     router.push("request-details");
+  }
+
+  if (!request || !value) {
+    return (
+      <div className="w-[100vw] h-[100vh] flex flex-col gap-[200px]">
+        <Header />
+        <div className="flex justify-center items-center">
+          <h1 className="text-[28px] font-flexoMedium">Sem acesso</h1>
+        </div>
+      </div>
+    );
   }
   return (
     <div>

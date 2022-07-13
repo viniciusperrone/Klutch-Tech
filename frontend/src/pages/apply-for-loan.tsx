@@ -1,5 +1,6 @@
-import Image from "next/image";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { useRequest } from "@hooks/useRequest";
 import { Table } from "@components/Table";
@@ -18,18 +19,34 @@ export default function ApplyForLoan() {
   const { request } = useRequest();
   const { value } = useValue();
 
-  if (!request || !value) {
-    router.back();
-    return;
-  }
-
-  const newInstallment = request.table.installments.filter(
-    (installment) => installment.installment <= request.installments.installment
-  );
-
   function handleDone() {
     router.push("request-feedback");
   }
+
+  if (!request || !value) {
+    return (
+      <div className="w-[100vw] h-[100vh] flex flex-col gap-[200px]">
+        <Header />
+        <div className="flex justify-center items-center">
+          <h1 className="text-[28px] font-flexoMedium">Sem acesso</h1>
+        </div>
+      </div>
+    );
+  }
+
+  const newInstallment =
+    request.table &&
+    request.table.installments.filter(
+      (installment) =>
+        installment.installment <= request.installments.installment
+    );
+
+  useEffect(() => {
+    if (!request || !value) {
+      router.back();
+      return;
+    }
+  }, []);
   return (
     <div>
       <Header />
