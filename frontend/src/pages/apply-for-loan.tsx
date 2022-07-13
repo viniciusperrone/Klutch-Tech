@@ -1,29 +1,34 @@
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Image from "next/image";
+import { useRouter } from "next/router";
 
-import { useRequest } from '@hooks/useRequest';
-import { Table } from '@components/Table';
-import { Header } from '@components/Header';
+import { useRequest } from "@hooks/useRequest";
+import { Table } from "@components/Table";
+import { Header } from "@components/Header";
 
-import FillingSvg from 'assets/icons/filling-orange.svg';
-import PlusSvg from 'assets/icons/plus.svg';
-import ArrowUpSvg from 'assets/icons/arrow-up.svg';
-import ArrowDownSvg from 'assets/icons/arrow-down.svg';
-import CheckSvg from 'assets/icons/check.svg';
-import { useValue } from '@hooks/useValue';
-import { currencyBRL } from 'utils/currencyBRL';
+import FillingSvg from "assets/icons/filling-orange.svg";
+import PlusSvg from "assets/icons/plus.svg";
+import ArrowUpSvg from "assets/icons/arrow-up.svg";
+import ArrowDownSvg from "assets/icons/arrow-down.svg";
+import CheckSvg from "assets/icons/check.svg";
+import { useValue } from "@hooks/useValue";
+import { currencyBRL } from "utils/currencyBRL";
 
 export default function ApplyForLoan() {
   const router = useRouter();
   const { request } = useRequest();
   const { value } = useValue();
 
+  if (!request || !value) {
+    router.back();
+    return;
+  }
+
   const newInstallment = request.table.installments.filter(
-    installment => installment.installment <= request.installments.installment
+    (installment) => installment.installment <= request.installments.installment
   );
 
   function handleDone() {
-    router.push('request-feedback');
+    router.push("request-feedback");
   }
   return (
     <div>
@@ -127,7 +132,7 @@ export default function ApplyForLoan() {
                 className="w-[580px] h-[60px] bg-blue-400 rounded-[5px] flex gap-5 justify-center items-center text-[24px] font-flexoBold text-white hover:opacity-80"
                 onClick={handleDone}
               >
-                {' '}
+                {" "}
                 <Image src={CheckSvg} alt="check-card" width={26} height={26} />
                 Concluir
               </button>

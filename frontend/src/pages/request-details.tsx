@@ -1,23 +1,30 @@
-import Image from 'next/image';
+import { useRouter } from "next/router";
+import Image from "next/image";
 
-import { useValue } from '@hooks/useValue';
-import { useStorage } from '@hooks/useStorage';
-import { useRequest } from '@hooks/useRequest';
-import { Header } from '@components/Header';
-import { currencyBRL } from 'utils/currencyBRL';
+import { useValue } from "@hooks/useValue";
+import { useStorage } from "@hooks/useStorage";
+import { useRequest } from "@hooks/useRequest";
+import { Header } from "@components/Header";
+import { currencyBRL } from "utils/currencyBRL";
 
-import FillingSvg from 'assets/icons/filling-orange.svg';
-import PlusSvg from 'assets/icons/plus.svg';
-import CardSvg from 'assets/icons/card.svg';
-import AlertSvg from 'assets/icons/alert.svg';
-import CheckCircleSvg from 'assets/icons/checkmark-circle.svg';
-import DocumentSvg from 'assets/icons/document.svg';
-import { dateFormatted } from 'utils/dateFormatted';
+import FillingSvg from "assets/icons/filling-orange.svg";
+import PlusSvg from "assets/icons/plus.svg";
+import CardSvg from "assets/icons/card.svg";
+import AlertSvg from "assets/icons/alert.svg";
+import CheckCircleSvg from "assets/icons/checkmark-circle.svg";
+import DocumentSvg from "assets/icons/document.svg";
+import { dateFormatted } from "utils/dateFormatted";
 
 export default function RequestDetails() {
+  const router = useRouter();
   const { value } = useValue();
   const { request } = useRequest();
   const { storage } = useStorage();
+
+  if (!request || !value) {
+    router.back();
+    return;
+  }
 
   return (
     <div>
@@ -38,7 +45,7 @@ export default function RequestDetails() {
           <div className="w-[380px] flex flex-col gap-[12px]">
             <div className="max-w-[380px] h-[50px] bg-gray-200 rounded-[5px] flex justify-center items-center">
               <h2 className="text-[18px] font-flexoMedium text-gray-900">
-                Solicitação gerada por{' '}
+                Solicitação gerada por{" "}
                 <strong className="text-[18px] font-flexoBold text-blue-400">
                   Sistema Credfica
                 </strong>
@@ -125,7 +132,7 @@ export default function RequestDetails() {
           <div className="w-[380px] flex flex-col gap-[12px] justify-end">
             <div className="px-[20px] max-w-[380px] h-[50px] bg-gray-200 rounded-[5px] flex items-center">
               <h2 className="text-[18px] font-flexoMedium text-gray-900">
-                Fluxo da Solicitação:{' '}
+                Fluxo da Solicitação:{" "}
                 <strong className="text-[18px] font-flexoBold text-blue-400">
                   Manual
                 </strong>
@@ -155,7 +162,7 @@ export default function RequestDetails() {
                   </h1>
                 </div>
                 <h1 className="text-[16px] font-flexoBoldIt">
-                  {request.installments.installment} parcelas de:{' '}
+                  {request.installments.installment} parcelas de:{" "}
                   <strong className="text-[16px] font-flexoBoldIt text-green-700">
                     {currencyBRL(
                       (request.installments.installmentValue * value) /

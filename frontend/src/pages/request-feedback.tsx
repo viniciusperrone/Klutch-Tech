@@ -1,23 +1,28 @@
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import { Header } from '../components/Header';
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { GoCheck } from "react-icons/go";
 
-import { GoCheck } from 'react-icons/go';
-import FillingSvg from '../assets/icons/filling-orange.svg';
-import PlusSvg from '../assets/icons/plus.svg';
-import CheckSvg from '../assets/icons/check.svg';
-import CardSvg from '../assets/icons/card.svg';
-import { useRequest } from '@hooks/useRequest';
-import { useValue } from '@hooks/useValue';
-import { currencyBRL } from 'utils/currencyBRL';
+import { Header } from "@components/Header";
+import { useRequest } from "@hooks/useRequest";
+import { useValue } from "@hooks/useValue";
+import { currencyBRL } from "utils/currencyBRL";
+
+import FillingSvg from "assets/icons/filling-orange.svg";
+import PlusSvg from "assets/icons/plus.svg";
+import CardSvg from "assets/icons/card.svg";
 
 export default function RequestFeedback() {
   const router = useRouter();
   const { request } = useRequest();
   const { value } = useValue();
 
+  if (!request || !value) {
+    router.back();
+    return;
+  }
+
   function handleRequestDetails() {
-    router.push('request-details');
+    router.push("request-details");
   }
   return (
     <div>
