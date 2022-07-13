@@ -7,7 +7,7 @@
 
 - Teste técnico para admissão.
 - Construir fluxo de solicitação de [empréstimo](https://coggle.it/diagram/X_SVHsi-aSKloIM1/t/desafio-klutch-front-end/9423b0c199f9c5776418e088a35f8a8b925239e1c9ecd6830b3bbcdb4eb40c90)
-- Construir interface com (Next.js)[https://xd.adobe.com/view/dbb459d7-d5e1-4d6f-8e1a-00d9a9fb6a32-8ee7/grid/]
+- Construir interface com [Next.js](https://xd.adobe.com/view/dbb459d7-d5e1-4d6f-8e1a-00d9a9fb6a32-8ee7/grid/)
 - Construir API Restful com Django.
 
 # Dependências Django
