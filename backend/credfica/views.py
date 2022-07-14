@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
@@ -24,10 +23,10 @@ class TableApi(APIView):
 
 class ClientApi(APIView):
     @csrf_exempt
-    def getAll(request):
+    def findCustomer(request):
         customerData = JSONParser().parse(request)
         customer = Customer.objects.get(cpf=customerData['cpf'])
-        if customer is NULL:
+        if customer is None:
             return JsonResponse('Customer not exist!', safe=False, status=401)
         customer_serializer = CustomerSerialize(customer)
 
@@ -39,16 +38,16 @@ class SolicitationApi(APIView):
     def sendRequest(request):
         sendRequestData = JSONParser().parse(request)
         customer = Customer.objects.get(id=sendRequestData['clientId'])
-        if customer is NULL:
+        if customer is None:
             return JsonResponse('Customer not exist!', safe=False, status=401)
 
         installment = Installments.objects.get(
             id=sendRequestData['installmentId'])
-        if installment is NULL:
+        if installment is None:
             return JsonResponse('Installment not exist!', safe=False, status=401)
 
         table = RateTable.objects.get(id=sendRequestData['rateTableId'])
-        if table is NULL:
+        if table is None:
             return JsonResponse('Table not exist!', safe=False, status=401)
 
         solicitation_serializer = SolicitationSerialize(data=sendRequestData)
