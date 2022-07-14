@@ -5,8 +5,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.db import models
 
-from credfica.models import Customer, Installments, RateTable, Solicitation
-from credfica.serializers import CustomerSerialize, InstallmentsSerialize, RateTableSerialize, SolicitationSerialize
+from credfica.models import Customer, Installments, RateTable
+from credfica.serializers import CustomerSerialize, RateTableSerialize, SolicitationSerialize
 # Create your views here.
 
 
@@ -52,7 +52,6 @@ class SolicitationApi(APIView):
 
         solicitation_serializer = SolicitationSerialize(data=sendRequestData)
 
-        print(solicitation_serializer)
         if solicitation_serializer.is_valid():
             solicitation_serializer.save(
                 customer=customer, installments=installment, table=table)

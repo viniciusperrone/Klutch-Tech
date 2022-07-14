@@ -8,7 +8,7 @@ clientApi = ClientApi
 solicitation = SolicitationApi
 
 urlpatterns = [
-    path('', rateTable.getAll),
-    path('search', clientApi.findCustomer),
-    path('send-request', solicitation.sendRequest),
+    path('', rateTable.getAll, name="all"),
+    path('search', clientApi.findCustomer, name="customer"),
+    path('send-request', solicitation.sendRequest, name="send-request"),
 ]
