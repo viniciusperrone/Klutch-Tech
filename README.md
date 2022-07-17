@@ -27,9 +27,7 @@
   psycopg2==2.9.3
   psycopg2-binary==2.9.3
   pycodestyle==2.8.0
-  pypiwin32==223
   pytz==2022.1
-  pywin32==304
   sqlparse==0.4.2
   toml==0.10.2
   tzdata==2022.1
